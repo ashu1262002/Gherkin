@@ -1,0 +1,25 @@
+Scenario: Get user details with authorization
+    Given the API endpoint "https://api.example.com/users"
+    And the request method "GET"
+    And the request headers:
+      | Content-Type   | application/json |
+      | Authorization  | Bearer <token>   |
+    And the request parameters:
+      | id   | 123              |
+      | name | John Doe         |
+    When the API is called
+    Then the response status code should be 200
+    And the response headers should contain:
+      | Content-Type   | application/json |
+    And the response body should contain user details
+
+  Scenario: Get user details without authorization
+    Given the API endpoint "https://api.example.com/users"
+    And the request method "GET"
+    And the request headers:
+      | Content-Type | application/json |
+    And the request parameters:
+      | id   | 123              |
+      | name | John Doe         |
+    When the API is called
+    Then the response status code should be 401
